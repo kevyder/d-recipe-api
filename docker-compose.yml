@@ -5,9 +5,9 @@ services:
     build:
       context: .
     ports:
-      - "8000:8000"
+      - "8001:8000"
     user: "1001:985"
     volumes:
       - ./app:/app
     command: >
-      sh -c "python3 manage.py runserver 0.0.0.0:8000"
+      sh -c "python3 manage.py runserver 0.0.0.0:8000 && flake8 cmdbox"
