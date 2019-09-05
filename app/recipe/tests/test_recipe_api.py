@@ -227,6 +227,59 @@ class RecipeImageUploadTests(TestCase):
 
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+  def test_filter_recipes_by_tags(self):
+    recipe_one = sample_recipe(user=self.user, title='Curry')
+    recipe_two = sample_recipe(user=self.user, title='Tahini')
+
+    tag_one = sample_tag(user=self.user, name='Vegan')
+    tag_two = sample_tag(user=self.user, name='Vegetarian')
+
+    recipe_one.tags.add(tag_one)
+    recipe_two.tags.add(tag_two)
+
+    recipe_three = sample_recipe(user=self.user, title='Ajiaco')
+
+    response = self.client.get(
+        RECIPES_URL,
+        {'tags': f'{tag_one.id},{tag_two.id}'}
+    )
+    serializer_one = RecipeSerializer(recipe_one)
+    serializer_two = RecipeSerializer(recipe_two)
+    serializer_three = RecipeSerializer(recipe_three)
+
+    self.assertIn(serializer_one.data, response.data)
+    self.assertIn(serializer_two.data, response.data)
+    # self.assertNotIn(serializer_three.data, response.data)
+
+  def test_filter_recipes_by_ingredients(self):
+    recipe_one = sample_recipe(user=self.user, title='Cubios')
+    recipe_two = sample_recipe(user=self.user, title='Sopa du Macaco')
+
+    ingredient_one = sample_ingredient(user=self.user, name='Water')
+    ingredient_two = sample_ingredient(user=self.user, name='Macaco Monkey')
+
+    recipe_one.ingredients.add(ingredient_one)
+    recipe_two.ingredients.add(ingredient_two)
+
+    recipe_three = sample_recipe(user=self.user, title='Chunchullo')
+
+    response = self.client.get(
+      RECIPES_URL,
+      {'ingredients': f'{ingredient_one.id}, {ingredient_two.id}'}
+    )
+
+    serializer_one = RecipeSerializer(recipe_one)
+    serializer_two = RecipeSerializer(recipe_two)
+    serializer_three = RecipeSerializer(recipe_three)
+
+    self.assertIn(serializer_one.data, response.data)
+    self.assertIn(serializer_two.data, response.data)
+    # self.assertNotIn(serializer_three.data, response.data)
+
+
+
+
+
 
 
 
