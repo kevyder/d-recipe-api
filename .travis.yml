@@ -10,6 +10,5 @@ before_script: pip install docker-compose
 script:
   - docker-compose run app sh -c "python manage.py test && flake8 cmdbox"
   - docker-compose run -u root app sh -c "coverage run --source=. /app/manage.py test"
-  - docker-compose run -u root app sh -c "coverage report -m"
 after_success:
   - coveralls

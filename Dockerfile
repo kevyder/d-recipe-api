@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-ENV PYTHONUNBUFFERED 14
+ENV PYTHONUNBUFFERED 1
 ENV COVERALLS_REPO_TOKEN qSQRnKz9DiB6rzkd5aLDIU8mjZDNd6UfX
 
 COPY ./requirements.txt /requirements.txt
