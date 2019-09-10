@@ -12,4 +12,4 @@ script:
   - docker-compose run -u root app sh -c "coverage run --source=. /app/manage.py test"
   - docker-compose run -u root app sh -c "coverage report -m"
 after_success:
-  - coveralls --data_file .coverage
+  - coveralls

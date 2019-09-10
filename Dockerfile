@@ -1,6 +1,7 @@
 FROM python:3.7-alpine
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 14
+ENV COVERALLS_REPO_TOKEN qSQRnKz9DiB6rzkd5aLDIU8mjZDNd6UfX
 
 COPY ./requirements.txt /requirements.txt
 RUN apk add --update --no-cache postgresql-client jpeg-dev
