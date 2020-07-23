@@ -1,12 +1,10 @@
-from rest_framework import viewsets, mixins, status
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
-from rest_framework.response import Response
-
-from core.models import Tag, Ingredient, Recipe
-
+from core.models import Ingredient, Recipe, Tag
 from recipe import serializers
+from rest_framework import mixins, status, viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 
 class BaseRecipeAttrViewSet(
@@ -28,6 +26,8 @@ class TagViewSet(BaseRecipeAttrViewSet):
 
 
 class IngredientViewSet(BaseRecipeAttrViewSet):
+    """Get ingredients"""
+
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
 
@@ -43,6 +43,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return [int(str_id) for str_id in qs.split(",")]
 
     def get_queryset(self):
+        """ queryset """
         tags = self.request.query_params.get("tags")
         ingredients = self.request.query_params.get("ingredients")
         queryset = self.queryset
